@@ -144,7 +144,9 @@ router.post(
       if (profile) {
         // Update
         Profile.findOneAndUpdate(
-          { user: req.user.id },
+          {
+            user: req.user.id
+          },
           { $set: profileFields },
           { new: true }
         ).then(profile => res.json(profile));

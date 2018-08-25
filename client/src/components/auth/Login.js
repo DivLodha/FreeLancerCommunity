@@ -29,13 +29,10 @@ class Login extends Component {
     axios
       .post("/api/users/login", user)
       .then(res => {
-        console.log(res.data);
-        console.log("Logged In status " + this.state.loggedin);
         saveUser(res.data.token, res.data.name, res.data.userId);
         this.setState({
           loggedin: true
         });
-        console.log(this.state.loggedin);
       })
       .catch(err => this.setState({ errors: err.response.data }));
   }

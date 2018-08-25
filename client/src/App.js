@@ -7,6 +7,7 @@ import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/auth/Dashboard";
+import CreateProfile from "./components/CreateProfile/CreateProfile";
 
 import "./App.css";
 
@@ -21,6 +22,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/createprofile" component={CreateProfile} />
           </div>
           <Footer />
         </div>

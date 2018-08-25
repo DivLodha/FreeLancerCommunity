@@ -1,5 +1,4 @@
 function isLoggedIn() {
-  console.log(localStorage.getItem("token"));
   return localStorage.getItem("token") !== null;
 }
 function userLogout() {
@@ -8,7 +7,6 @@ function userLogout() {
   localStorage.removeItem("userId");
 }
 function saveUser(token, name, userId) {
-  console.log(userId);
   localStorage.setItem("token", token);
   localStorage.setItem("name", name);
   localStorage.setItem("userId", userId);

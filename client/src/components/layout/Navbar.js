@@ -37,7 +37,9 @@ class Navbar extends Component {
             {isLoggedIn() ? (
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <a className="nav-link">{full_name}</a>
+                  <a className="nav-link" style={{ paddingRight: "30px" }}>
+                    {full_name}
+                  </a>
                 </li>
                 <li className="nav-item">
                   <button onClick={this.logout} className="btn btn-warning">
