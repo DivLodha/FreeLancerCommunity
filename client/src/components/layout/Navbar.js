@@ -13,9 +13,15 @@ class Navbar extends Component {
     return (
       <nav className="navbar navbar-expand-sm navbar-dark fixed-top bg-dark mb-4 navbar-fixed-top">
         <div className="container">
-          <Link className="navbar-brand" to="/">
-            FreeLancer Community
-          </Link>
+          {isLoggedIn() ? (
+            <Link className="navbar-brand" to="/dashboard">
+              FreeLancer's Community
+            </Link>
+          ) : (
+            <Link className="navbar-brand" to="/">
+              FreeLancer's Community
+            </Link>
+          )}
           <button
             className="navbar-toggler"
             type="button"

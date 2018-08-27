@@ -3,8 +3,9 @@ import { isLoggedIn, getToken } from "../auth/authentication";
 import classnames from "classnames";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
+import isEmpty from "../Validation/validation";
 
-class CreateProfile extends Component {
+class EditProfile extends Component {
   constructor() {
     super();
     this.state = {
@@ -31,6 +32,51 @@ class CreateProfile extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentDidMount() {
+    axios
+      .get("/api/profile", {
+        headers: {
+          Authorization: getToken(),
+          "Access-Control-Allow-Headers": ""
+        }
+      })
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          profile: true,
+          handle: res.data.handle,
+          company: !isEmpty(res.data.company) ? res.data.company : "",
+          website: !isEmpty(res.data.website) ? res.data.website : "",
+          location: !isEmpty(res.data.location) ? res.data.location : "",
+          status: !isEmpty(res.data.status) ? res.data.status : "",
+          skills: !isEmpty(res.data.skills) ? res.data.skills.join(",") : "",
+          githubusername: !isEmpty(res.data.githubusername)
+            ? res.data.githubusername
+            : "",
+          bio: !isEmpty(res.data.bio) ? res.data.bio : "",
+          twitter: !isEmpty(res.data.social.twitter)
+            ? res.data.social.twitter
+            : "",
+          facebook: !isEmpty(res.data.social.facebook)
+            ? res.data.social.facebook
+            : "",
+          linkedin: !isEmpty(res.data.social.linkedin)
+            ? res.data.social.linkedin
+            : "",
+          youtube: !isEmpty(res.data.social.youtube)
+            ? res.data.social.youtube
+            : "",
+          instagram: !isEmpty(res.data.social.instagram)
+            ? res.data.social.instagram
+            : ""
+        });
+      })
+      .catch(err => {
+        console.log(err.response.data);
+        console.log(getToken());
+      });
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
@@ -51,6 +97,8 @@ class CreateProfile extends Component {
       youtube: this.state.youtube,
       instagram: this.state.instagram
     };
+
+    console.log(profileData);
 
     axios
       .post("/api/profile", profileData, {
@@ -105,11 +153,7 @@ class CreateProfile extends Component {
         <div className="container" style={{ marginTop: "50px" }}>
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 tex-center">Create Your Profile</h1>
-              <p className="lead text-center">
-                Lets get some info to make your profile stand out
-              </p>
-              <small className="d-block pb-3">*required fields</small>
+              <h1 className="display-4 tex-center">Edit Your Profile</h1>
             </div>
           </div>
           <form onSubmit={this.onSubmit}>
@@ -122,7 +166,7 @@ class CreateProfile extends Component {
                 placeholder="* Profile Handle"
                 name="handle"
                 value={this.state.handle}
-                onChange={this.onChange}
+                disabled
               />
               <small className="form-text text-muted">
                 A unique handle for your profile URL. You can use your full
@@ -382,4 +426,4 @@ class CreateProfile extends Component {
   }
 }
 
-export default CreateProfile;
+export default EditProfile;

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+//import { Redirect } from "react-router-dom";
+//import { isLoggedIn } from "../auth/authentication";
 
 class Landing extends Component {
   render() {
