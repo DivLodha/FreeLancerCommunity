@@ -1,39 +1,40 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   isLoggedIn,
   userInfo,
   getToken,
   userLogout
-} from "../auth/authentication";
-import axios from "axios";
-import { Redirect } from "react-router-dom";
-import { Link } from "react-router-dom";
-import ProfileActions from "../CreateProfile/ProfileActions";
-import Experience from "./Experience";
-import Education from "./Education";
+} from '../auth/authentication';
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import ProfileActions from '../CreateProfile/ProfileActions';
+import Experience from './Experience';
+import Education from './Education';
 
 class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
       profile: false,
-      handle: "",
-      exp: "",
-      edu: ""
+      handle: '',
+      exp: '',
+      edu: ''
     };
   }
 
   onDeleteClick = e => {
-    if (window.confirm("Are you sure? This cannot be undone!")) {
+    if (window.confirm('Are you sure? This cannot be undone!')) {
       axios
-        .delete("/api/profile", {
+        .delete('/api/profile', {
           headers: {
             Authorization: getToken(),
-            "Access-Control-Allow-Headers": ""
+            'Access-Control-Allow-Headers': ''
           }
         })
         .then(res => {
           userLogout();
+          window.location.reload();
           console.log(res.data);
         })
         .catch(err => {
@@ -44,14 +45,13 @@ class Dashboard extends Component {
 
   componentDidMount() {
     axios
-      .get("/api/profile", {
+      .get('/api/profile', {
         headers: {
           Authorization: getToken(),
-          "Access-Control-Allow-Headers": ""
+          'Access-Control-Allow-Headers': ''
         }
       })
       .then(res => {
-        console.log(res.data.experience);
         this.setState({
           profile: true,
           handle: res.data.handle,
@@ -60,6 +60,10 @@ class Dashboard extends Component {
         });
       })
       .catch(err => {
+        if (err.response.data === 'Unauthorized') {
+          userLogout();
+          window.location.reload();
+        }
         console.log(err.response.data);
       });
   }
@@ -67,13 +71,13 @@ class Dashboard extends Component {
   render() {
     const full_name = isLoggedIn() ? userInfo().full_name : null;
     return (
-      <div style={{ marginTop: "100px" }}>
-        {isLoggedIn() ? null : alert("You are not loggedIn")}
+      <div style={{ marginTop: '100px' }}>
+        {isLoggedIn() ? null : alert('You are not loggedIn')}
         {isLoggedIn() ? null : <Redirect to="/login/" />}
         {this.state.profile ? (
           <div className="Dashboard">
             <p className="lead text-muted">
-              Welcome{" "}
+              Welcome{' '}
               <Link to={`/profile/${this.state.handle}`}>
                 {this.state.handle}
               </Link>
@@ -83,7 +87,7 @@ class Dashboard extends Component {
             <br />
             <br />
             <Education education={this.state.edu} />
-            <div style={{ marginBottom: "60px" }} />
+            <div style={{ marginBottom: '60px' }} />
             <button className="btn btn-danger" onClick={this.onDeleteClick}>
               Delete My Account
             </button>

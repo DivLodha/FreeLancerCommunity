@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { isLoggedIn, getToken } from "../auth/authentication";
-import classnames from "classnames";
-import axios from "axios";
-import { Redirect } from "react-router-dom";
-import isEmpty from "../Validation/validation";
+import React, { Component } from 'react';
+import { isLoggedIn, getToken } from '../auth/authentication';
+import classnames from 'classnames';
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+import isEmpty from '../Validation/validation';
 
 class EditProfile extends Component {
   constructor() {
@@ -11,19 +11,19 @@ class EditProfile extends Component {
     this.state = {
       loggedIn: isLoggedIn(),
       displaySocialInputs: false,
-      handle: "",
-      company: "",
-      website: "",
-      location: "",
-      status: "",
-      skills: "",
-      githubusername: "",
-      bio: "",
-      twitter: "",
-      facebook: "",
-      linkedin: "",
-      youtube: "",
-      instagram: "",
+      handle: '',
+      company: '',
+      website: '',
+      location: '',
+      status: '',
+      skills: '',
+      githubusername: '',
+      bio: '',
+      twitter: '',
+      facebook: '',
+      linkedin: '',
+      youtube: '',
+      instagram: '',
       errors: {},
       profileUpdated: false
     };
@@ -34,46 +34,45 @@ class EditProfile extends Component {
 
   componentDidMount() {
     axios
-      .get("/api/profile", {
+      .get('/api/profile', {
         headers: {
           Authorization: getToken(),
-          "Access-Control-Allow-Headers": ""
+          'Access-Control-Allow-Headers': ''
         }
       })
       .then(res => {
         console.log(res.data);
+        console.log(res.data.handle);
         this.setState({
-          profile: true,
           handle: res.data.handle,
-          company: !isEmpty(res.data.company) ? res.data.company : "",
-          website: !isEmpty(res.data.website) ? res.data.website : "",
-          location: !isEmpty(res.data.location) ? res.data.location : "",
-          status: !isEmpty(res.data.status) ? res.data.status : "",
-          skills: !isEmpty(res.data.skills) ? res.data.skills.join(",") : "",
+          company: !isEmpty(res.data.company) ? res.data.company : '',
+          website: !isEmpty(res.data.website) ? res.data.website : '',
+          location: !isEmpty(res.data.location) ? res.data.location : '',
+          status: !isEmpty(res.data.status) ? res.data.status : '',
+          skills: !isEmpty(res.data.skills) ? res.data.skills.join(',') : '',
           githubusername: !isEmpty(res.data.githubusername)
             ? res.data.githubusername
-            : "",
-          bio: !isEmpty(res.data.bio) ? res.data.bio : "",
+            : '',
+          bio: !isEmpty(res.data.bio) ? res.data.bio : '',
           twitter: !isEmpty(res.data.social.twitter)
             ? res.data.social.twitter
-            : "",
+            : '',
           facebook: !isEmpty(res.data.social.facebook)
             ? res.data.social.facebook
-            : "",
+            : '',
           linkedin: !isEmpty(res.data.social.linkedin)
             ? res.data.social.linkedin
-            : "",
+            : '',
           youtube: !isEmpty(res.data.social.youtube)
             ? res.data.social.youtube
-            : "",
+            : '',
           instagram: !isEmpty(res.data.social.instagram)
             ? res.data.social.instagram
-            : ""
+            : ''
         });
       })
       .catch(err => {
         console.log(err.response.data);
-        console.log(getToken());
       });
   }
 
@@ -101,7 +100,7 @@ class EditProfile extends Component {
     console.log(profileData);
 
     axios
-      .post("/api/profile", profileData, {
+      .post('/api/profile', profileData, {
         headers: {
           Authorization: token
         }
@@ -125,15 +124,15 @@ class EditProfile extends Component {
     const { errors } = this.state;
     //select options for status
     const options = [
-      { label: "* Select Professional Status", value: 0 },
-      { label: "Developer", value: "Developer" },
-      { label: "Junior Developer", value: "Junior Developer" },
-      { label: "Senior Developer", value: "Senior Developer" },
-      { label: "Manager", value: "Manager" },
-      { label: "Student or Learning", value: "Student or Learning" },
-      { label: "Instructor or Teacher", value: "Instructor or Teacher" },
-      { label: "Intern", value: "Intern" },
-      { label: "Other", value: "Other" }
+      { label: '* Select Professional Status', value: 0 },
+      { label: 'Developer', value: 'Developer' },
+      { label: 'Junior Developer', value: 'Junior Developer' },
+      { label: 'Senior Developer', value: 'Senior Developer' },
+      { label: 'Manager', value: 'Manager' },
+      { label: 'Student or Learning', value: 'Student or Learning' },
+      { label: 'Instructor or Teacher', value: 'Instructor or Teacher' },
+      { label: 'Intern', value: 'Intern' },
+      { label: 'Other', value: 'Other' }
     ];
 
     const selectOptions = options.map(option => (
@@ -145,12 +144,12 @@ class EditProfile extends Component {
     return (
       <div
         className="create-profile"
-        style={{ marginTop: "100px", marginBottom: "80px" }}
+        style={{ marginTop: '100px', marginBottom: '80px' }}
       >
-        {this.state.loggedIn ? null : alert("You are not loggedIn")}
+        {this.state.loggedIn ? null : alert('You are not loggedIn')}
         {this.state.loggedIn ? null : <Redirect to="/login/" />}
         {this.state.profileUpdated ? <Redirect to="/dashboard/" /> : null}
-        <div className="container" style={{ marginTop: "50px" }}>
+        <div className="container" style={{ marginTop: '50px' }}>
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 tex-center">Edit Your Profile</h1>
@@ -160,8 +159,8 @@ class EditProfile extends Component {
             <div className="form-group">
               <input
                 type="text"
-                className={classnames("form-control form-control-lg", {
-                  "is-invalid": errors.handle
+                className={classnames('form-control form-control-lg', {
+                  'is-invalid': errors.handle
                 })}
                 placeholder="* Profile Handle"
                 name="handle"
@@ -178,8 +177,8 @@ class EditProfile extends Component {
             </div>
             <div className="form-group">
               <select
-                className={classnames("form-control form-control-lg", {
-                  "is-invalid": errors.status
+                className={classnames('form-control form-control-lg', {
+                  'is-invalid': errors.status
                 })}
                 placeholder="Status"
                 name="status"
@@ -198,8 +197,8 @@ class EditProfile extends Component {
             <div className="form-group">
               <input
                 type="text"
-                className={classnames("form-control form-control-lg", {
-                  "is-invalid": errors.company
+                className={classnames('form-control form-control-lg', {
+                  'is-invalid': errors.company
                 })}
                 placeholder="Company"
                 name="company"
@@ -216,8 +215,8 @@ class EditProfile extends Component {
             <div className="form-group">
               <input
                 type="text"
-                className={classnames("form-control form-control-lg", {
-                  "is-invalid": errors.website
+                className={classnames('form-control form-control-lg', {
+                  'is-invalid': errors.website
                 })}
                 placeholder="Website"
                 name="website"
@@ -234,8 +233,8 @@ class EditProfile extends Component {
             <div className="form-group">
               <input
                 type="text"
-                className={classnames("form-control form-control-lg", {
-                  "is-invalid": errors.location
+                className={classnames('form-control form-control-lg', {
+                  'is-invalid': errors.location
                 })}
                 placeholder="Location"
                 name="location"
@@ -252,8 +251,8 @@ class EditProfile extends Component {
             <div className="form-group">
               <input
                 type="text"
-                className={classnames("form-control form-control-lg", {
-                  "is-invalid": errors.skills
+                className={classnames('form-control form-control-lg', {
+                  'is-invalid': errors.skills
                 })}
                 placeholder="*Skills"
                 name="skills"
@@ -270,8 +269,8 @@ class EditProfile extends Component {
             <div className="form-group">
               <input
                 type="text"
-                className={classnames("form-control form-control-lg", {
-                  "is-invalid": errors.githubusername
+                className={classnames('form-control form-control-lg', {
+                  'is-invalid': errors.githubusername
                 })}
                 placeholder="Github Username"
                 name="githubusername"
@@ -288,8 +287,8 @@ class EditProfile extends Component {
             </div>
             <div className="form-group">
               <textarea
-                className={classnames("form-control form-control-lg", {
-                  "is-invalid": errors.bio
+                className={classnames('form-control form-control-lg', {
+                  'is-invalid': errors.bio
                 })}
                 placeholder="Short Bio"
                 name="bio"
@@ -327,8 +326,8 @@ class EditProfile extends Component {
                     </span>
                   </div>
                   <input
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.twitter
+                    className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.twitter
                     })}
                     placeholder="Twitter URL"
                     name="twitter"
@@ -346,8 +345,8 @@ class EditProfile extends Component {
                     </span>
                   </div>
                   <input
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.facebook
+                    className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.facebook
                     })}
                     placeholder="Facebook URL"
                     name="facebook"
@@ -365,8 +364,8 @@ class EditProfile extends Component {
                     </span>
                   </div>
                   <input
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.linkedin
+                    className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.linkedin
                     })}
                     placeholder="Linkedin URL"
                     name="linkedin"
@@ -384,8 +383,8 @@ class EditProfile extends Component {
                     </span>
                   </div>
                   <input
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.youtube
+                    className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.youtube
                     })}
                     placeholder="Youtube URL"
                     name="youtube"
@@ -403,8 +402,8 @@ class EditProfile extends Component {
                     </span>
                   </div>
                   <input
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.instagram
+                    className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.instagram
                     })}
                     placeholder="Instagram URL"
                     name="instagram"
